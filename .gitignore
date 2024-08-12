@@ -1,0 +1,5 @@
+poetry.lock
+screenshots/*
+test
+.env
+__pycache__

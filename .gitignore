@@ -3,3 +3,4 @@ screenshots/*
 test
 .env
 __pycache__
+.venv

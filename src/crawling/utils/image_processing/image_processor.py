@@ -35,18 +35,22 @@ class ImageProcessor:
 
     def image_split(self, image_object: Image)->t.List[np.array]:
         image_numpy = np.array(image_object)
+        print(image_numpy.shape)
         image_height, image_width, _ = image_numpy.shape
         image_batch_width, image_batch_height = self.image_batch_size_set(
             image_width=image_width,
             image_height=image_height
         )
+        print(f"batch length size: {image_batch_height}")
         image_split_batches = []
-        for bat_height_start in range(0, image_batch_height, image_batch_height):
-            image_split_batches.append(image_numpy[:, bat_height_start:bat_height_start+image_batch_height])
+        # while문으로 교체필요
+        for bat_height_start in range(0, image_height, image_batch_height):
+            print(f"temp_bat_height_start: {bat_height_start}")
+            image_split_batches.append(image_numpy[bat_height_start:bat_height_start+image_batch_height, :, :])
 
         return image_split_batches
     
-    def encode_image(self, image_path:str):
+    def encode_image(self, image_path:str)->bytes:
         with open(image_path, "rb") as image_file:
             return base64.b64encode(image_file.read()).decode('utf-8')
         

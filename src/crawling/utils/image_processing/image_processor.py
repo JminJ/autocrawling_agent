@@ -43,14 +43,16 @@ class ImageProcessor:
         )
         print(f"batch length size: {image_batch_height}")
         image_split_batches = []
-        # while문으로 교체필요
-        for bat_height_start in range(0, image_height, image_batch_height):
+
+        bat_height_start = 0
+        while bat_height_start <= image_height:
             print(f"temp_bat_height_start: {bat_height_start}")
             image_split_batches.append(image_numpy[bat_height_start:bat_height_start+image_batch_height, :, :])
+            bat_height_start += image_batch_height
 
         return image_split_batches
     
     def encode_image(self, image_path:str)->bytes:
         with open(image_path, "rb") as image_file:
-            return base64.b64encode(image_file.read()).decode('utf-8')
+            return base64.b64encode(image_file.ead()).decode('utf-8')
         

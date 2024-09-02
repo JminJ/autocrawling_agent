@@ -1,6 +1,4 @@
 import typing as t
-from icecream import ic
-from utils.image_processing.image_processor import ImageProcessor
 
 from langchain_openai import ChatOpenAI
 from langchain_core.messages import HumanMessage, SystemMessage
@@ -16,14 +14,18 @@ def gen_prompt(param_dict:t.Dict):
         {
             "type" : "text",
             "text" : f"{param_dict['question']}",
-        },
-        {
-            "type" : "image_url",
-            "image_url" : {
-                "url" : f"{param_dict['image_url']}",
-            }
         }
     ]
+    image_url = param_dict["image_url"]
+    for url in image_url:
+        human_messages.append(
+            {
+                "type" : "image_url",
+                "image_url" : {
+                    "url" : f"data:image/jpeg;base64,{url}",
+                }
+            }
+        )
     return [SystemMessage(content=system_message), HumanMessage(content=human_messages)]
 
 auto_crawling_chain = gen_prompt | chat_model | StrOutputParser()

@@ -54,5 +54,5 @@ class ImageProcessor:
     
     def encode_image(self, image_path:str)->bytes:
         with open(image_path, "rb") as image_file:
-            return base64.b64encode(image_file.ead()).decode('utf-8')
+            return base64.b64encode(image_file.read()).decode('utf-8')
         

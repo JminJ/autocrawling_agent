@@ -44,6 +44,7 @@ def load_batch_image(screenshot_batch_save_path:str)->t.List[bytes]:
         os.path.join(screenshot_batch_save_path, image_name) 
         for image_name in os.listdir(screenshot_batch_save_path)
     ]
+    screenshot_image_paths.reverse() # chunking 원본 순서기준으로 정렬됨
     screenshot_image_loads = [image_processor.encode_image(path) for path in screenshot_image_paths]
     return screenshot_image_loads
 
@@ -74,7 +75,7 @@ def is_url_checker(input_url:str)->bool:
 
 @router.post("/crawling")
 async def autocrawling_operation(input: CrawlingRequest):
-    screenshot_save_base_dir = "/Users/jeongminju/Documents/GITHUB/autocrawling_agent/screenshots"
+    screenshot_save_base_dir = "./screenshots"
     input_dict = input.model_dump()
     if not is_url_checker(input_url=input_dict["webpage_url"]):
         raise InputUrlTypeException(input_url=input_dict["webpage_url"])
@@ -93,7 +94,3 @@ async def autocrawling_operation(input: CrawlingRequest):
     }
     autocrawling_chain_result = auto_crawling_chain.invoke(input=gen_prompt_input)
     print(autocrawling_chain_result)
-    
-
-
-    

@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 from dotenv import load_dotenv, find_dotenv
+load_dotenv(find_dotenv())
 
 from src.crawling.openai_autocrawling_chain import auto_crawling_chain
 from src.crawling.utils.image_scrap.image_saver import image_batch_save
@@ -8,7 +9,6 @@ from src.api.router.crawling_router import router
 from src.api.exeptions.custom_exceptions import InputUrlTypeException
 from src.api.exeptions.handlers import input_url_type_exception_handler
 
-load_dotenv(find_dotenv())
 image_processor = ImageProcessor()
 app = FastAPI()
     

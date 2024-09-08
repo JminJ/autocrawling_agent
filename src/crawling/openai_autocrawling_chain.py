@@ -13,7 +13,7 @@ def gen_prompt(param_dict:t.Dict):
     human_messages = [
         {
             "type" : "text",
-            "text" : f"{param_dict['question']}",
+            "text" : f"{param_dict['question']}\n ##IMPORTANT\n1. results are must following order of screenshot images.\n2. results must have to same content compare to screenshot inner content.",
         }
     ]
     image_url = param_dict["image_url"]

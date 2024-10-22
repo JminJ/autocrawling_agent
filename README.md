@@ -2,6 +2,7 @@
 Auto crawling content of website using GPT-4O vision api.
 ```
 !!! Due to limitation of performance, crawling result can be different compared to original website content. !!!
++@) the openai change of policy, after "gpt-4o-2024-05-13" model, can't be crawling text content of image. 
 ```
 ## How to use
 1. make ".env" file. ".env" file must have "OPENAI_API_KEY" information.

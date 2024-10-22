@@ -18,10 +18,16 @@ Auto crawling content of website using GPT-4O vision api.
     ```shell
     docker run -itd -p 8000:8000 --name autocrawling_agent_api_container autocrawling_agent_image
     ```
-4. start uvicorn server
+4. docker exec to container
     ```shell
     docker exec -it autocrawling_agent_api_container bash
-    ...
+    ```
+4. install playwright
+    ```shell
     cd /workspace
+    playwright install
+    ```
+5. start uvicorn server
+    ```shell
     uvicorn src.api.main:app --port 8000
     ```

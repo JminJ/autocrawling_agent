@@ -7,7 +7,7 @@ import typing as t
 from fastapi import APIRouter
 
 from src.api.exeptions.custom_exceptions import InputUrlTypeException
-from src.api.models import CrawlingRequest
+from src.api.models import CrawlingRequest, CrawlingResponse
 from src.crawling.openai_autocrawling_chain import auto_crawling_chain
 from src.crawling.utils.image_processing.image_processor import ImageProcessor
 from src.crawling.utils.image_scrap.byte_to_image_converter import byte_to_image
@@ -83,7 +83,7 @@ def is_url_checker(input_url: str) -> bool:
     return False
 
 
-@router.post("/crawling")
+@router.post("/crawling", response_model=CrawlingResponse)
 async def autocrawling_operation(input: CrawlingRequest):
     screenshot_save_base_dir = "./screenshots"
     if not os.path.isdir(screenshot_save_base_dir):
@@ -97,7 +97,6 @@ async def autocrawling_operation(input: CrawlingRequest):
     result = await task_screenshot_split_save(
         webpage_url=input_dict["webpage_url"], screenshot_save_base_dir=screenshot_save_base_dir
     )
-    print(result)
     if not result:
         pass
 
@@ -107,3 +106,5 @@ async def autocrawling_operation(input: CrawlingRequest):
     }
     autocrawling_chain_result = auto_crawling_chain.invoke(input=gen_prompt_input)
     print(autocrawling_chain_result)
+
+    return CrawlingResponse(extracted_result=autocrawling_chain_result)

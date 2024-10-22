@@ -5,5 +5,6 @@ class CrawlingRequest(BaseModel):
     question: str
     webpage_url: str
 
+
 class CrawlingResponse(BaseModel):
-    pass
+    extracted_result: str
